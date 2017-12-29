@@ -17,8 +17,14 @@ FLAGS = {
 mnist = input_data.read_data_sets(FLAGS['data_dir'], one_hot=True)
 
 
+# 初始化权重
 def init_weights(shape):
     return tf.Variable(tf.random_normal(shape, stddev=0.01))
+
+
+# 初始化偏置
+def init_biases(shape):
+    return tf.Variable(tf.constant(0.1, shape=shape))
 
 
 # 定义卷积操作

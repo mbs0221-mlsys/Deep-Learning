@@ -27,6 +27,11 @@ def init_weights(shape):
     return tf.Variable(tf.random_normal(shape, stddev=0.01))
 
 
+# 初始化偏置
+def init_biases(shape):
+    return tf.Variable(tf.constant(0.1, shape=shape))
+
+
 # 定义卷积操作
 def conv2d(name, x, W, b, strides=1):
     x = tf.nn.conv2d(x, W, strides=[1, strides, strides, 1], padding='SAME')
@@ -72,14 +77,14 @@ weights = {
 }
 
 biases = {
-    'bc1': init_weights([96]),
-    'bc2': init_weights([256]),
-    'bc3': init_weights([384]),
-    'bc4': init_weights([384]),
-    'bc5': init_weights([256]),
-    'bd1': init_weights([4096]),
-    'bd2': init_weights([4096]),
-    'out': init_weights([n_classes]),
+    'bc1': init_biases([96]),
+    'bc2': init_biases([256]),
+    'bc3': init_biases([384]),
+    'bc4': init_biases([384]),
+    'bc5': init_biases([256]),
+    'bd1': init_biases([4096]),
+    'bd2': init_biases([4096]),
+    'out': init_biases([n_classes]),
 }
 
 
