@@ -22,6 +22,11 @@ y = tf.placeholder(tf.float32, [None, n_classes])
 keep_prob = tf.placeholder(tf.float32)  # dropout
 
 
+# 初始化权重
+def init_weights(shape):
+    return tf.Variable(tf.random_normal(shape, stddev=0.01))
+
+
 # 定义卷积操作
 def conv2d(name, x, W, b, strides=1):
     x = tf.nn.conv2d(x, W, strides=[1, strides, strides, 1], padding='SAME')
@@ -35,8 +40,8 @@ def maxpool2d(name, x, k=2):
 
 
 # 规范化操作
-def norm(name, l_input, lsize=4):
-    return tf.nn.lrn(l_input, lsize, bias=1.0, alpha=0.001 / 9.0, beta=0.75, name=name)
+def norm(name, l_input, l_size=4):
+    return tf.nn.lrn(l_input, l_size, bias=1.0, alpha=0.001 / 9.0, beta=0.75, name=name)
 
 
 # 全连接操作
@@ -56,25 +61,25 @@ def output(x, W, b):
 
 # 定义所有的网络参数
 weights = {
-    'wc1': tf.Variable(tf.random_normal([11, 11, 1, 96])),
-    'wc2': tf.Variable(tf.random_normal([5, 5, 96, 256])),
-    'wc3': tf.Variable(tf.random_normal([3, 3, 256, 384])),
-    'wc4': tf.Variable(tf.random_normal([3, 3, 384, 384])),
-    'wc5': tf.Variable(tf.random_normal([3, 3, 384, 256])),
-    'wd1': tf.Variable(tf.random_normal([4 * 4 * 256, 4096])),
-    'wd2': tf.Variable(tf.random_normal([4096, 4096])),
-    'out': tf.Variable(tf.random_normal([4096, 10])),
+    'wc1': init_weights([11, 11, 1, 96]),
+    'wc2': init_weights([5, 5, 96, 256]),
+    'wc3': init_weights([3, 3, 256, 384]),
+    'wc4': init_weights([3, 3, 384, 384]),
+    'wc5': init_weights([3, 3, 384, 256]),
+    'wd1': init_weights([4 * 4 * 256, 4096]),
+    'wd2': init_weights([4096, 4096]),
+    'out': init_weights([4096, 10]),
 }
 
 biases = {
-    'bc1': tf.Variable(tf.random_normal([96])),
-    'bc2': tf.Variable(tf.random_normal([256])),
-    'bc3': tf.Variable(tf.random_normal([384])),
-    'bc4': tf.Variable(tf.random_normal([384])),
-    'bc5': tf.Variable(tf.random_normal([256])),
-    'bd1': tf.Variable(tf.random_normal([4096])),
-    'bd2': tf.Variable(tf.random_normal([4096])),
-    'out': tf.Variable(tf.random_normal([n_classes])),
+    'bc1': init_weights([96]),
+    'bc2': init_weights([256]),
+    'bc3': init_weights([384]),
+    'bc4': init_weights([384]),
+    'bc5': init_weights([256]),
+    'bd1': init_weights([4096]),
+    'bd2': init_weights([4096]),
+    'out': init_weights([n_classes]),
 }
 
 
@@ -91,7 +96,7 @@ def AlexNet(x, W, b, d):
     # 下采样
     pool1 = maxpool2d('pool1', conv1, k=2)
     # 规范化
-    norm1 = norm('norm1', pool1, lsize=4)
+    norm1 = norm('norm1', pool1, l_size=4)
 
     # 第二层卷积
     # 卷积
@@ -99,7 +104,7 @@ def AlexNet(x, W, b, d):
     # 最大池化（向下采样）
     pool2 = maxpool2d('pool2', conv2, k=2)
     # 规范化
-    norm2 = norm('norm2', pool2, lsize=4)
+    norm2 = norm('norm2', pool2, l_size=4)
 
     # 第三层卷积
     # 卷积
@@ -107,7 +112,7 @@ def AlexNet(x, W, b, d):
     # 最大池化（向下采样）
     pool3 = maxpool2d('pool3', conv3, k=2)
     # 规范化
-    norm3 = norm('norm3', pool3, lsize=4)
+    norm3 = norm('norm3', pool3, l_size=4)
 
     # 第四层卷积
     conv4 = conv2d('conv4', norm3, W['wc4'], b['bc4'])
@@ -118,7 +123,7 @@ def AlexNet(x, W, b, d):
     # 下采样
     pool5 = maxpool2d('pool5', conv5, k=2)
     # 规范化
-    norm5 = norm('norm5', pool5, lsize=4)
+    norm5 = norm('norm5', pool5, l_size=4)
 
     # 全连接层1
     fc1 = full('fc1', norm5, W['wd1'], b['bd1'], d)
@@ -129,6 +134,7 @@ def AlexNet(x, W, b, d):
     # 输出层
     out = output(fc2, W['out'], b['out'])
     return out
+
 
 # 构建模型，定义损失函数和优化器，并构建评估函数
 
