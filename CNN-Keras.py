@@ -1,5 +1,6 @@
-from keras.models import Sequential
+from keras.models import Sequential, save_model, load_model, model_from_json, model_from_yaml
 from keras.layers import Dense, Activation, Convolution2D, MaxPooling2D, Dropout, Flatten
+from keras.utils import np_utils
 from keras.datasets import mnist
 
 batch_size = 128
@@ -70,3 +71,15 @@ cnn.fit(X_train, Y_train, nb_epoch=5, batch_size=32, verbose=1, validation_data=
 score = cnn.evaluate(X_test, Y_test, verbose=0)
 print('Test score:', score[0])
 print('Test accuracy:', score[1])
+
+# 保存模型结构
+yaml_string = cnn.to_yaml()
+json_string = cnn.to_json()
+
+# 加载模型
+model = model_from_yaml(yaml_string)
+model = model_from_json(json_string)
+
+# 保存/加载模型权重
+cnn.save_weights('my_model_weights.h5')
+cnn.load_weights('my_model_weights.h5')

@@ -5,6 +5,7 @@
       <w>alexnet</w>
       <w>conv</w>
       <w>crossentropy</w>
+      <w>keras</w>
       <w>maxpool</w>
       <w>mnist</w>
       <w>oxflower</w>
