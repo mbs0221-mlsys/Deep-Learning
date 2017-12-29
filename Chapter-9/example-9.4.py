@@ -22,9 +22,8 @@ def init_weights(shape):
 
 
 # 定义卷积操作
-def conv2d(name, x, W, b, strides=1):
+def conv2d(name, x, W, strides=1):
     x = tf.nn.conv2d(x, W, strides=[1, strides, strides, 1], padding='SAME')
-    x = tf.nn.bias_add(x, b)
     return tf.nn.relu(x, name=name)  # 使用relu激活函数
 
 
@@ -62,17 +61,17 @@ weights = {
 }
 
 
-def model(x, W, b, d, dh):
+def model(x, W, d, dh):
     # 第一组卷积池化层，随机dropout
-    conv1 = conv2d('conv1', x, W['w1'], b)
+    conv1 = conv2d('conv1', x, W['w1'])
     pool1 = maxpool2d('pool1', conv1)
     drop1 = dropout(pool1, d)
     # 第二组卷积池化层，随机dropout
-    conv2 = conv2d('conv2', drop1, W['w2'], b)
+    conv2 = conv2d('conv2', drop1, W['w2'])
     pool2 = maxpool2d('pool2', conv2)
-    drop2 = dropout(pool1, d)
+    drop2 = dropout(pool2, d)
     # 第三组卷积池化层，随机dropout
-    conv3 = conv2d('conv3', drop2, W['w3'], b)
+    conv3 = conv2d('conv3', drop2, W['w3'])
     pool3 = maxpool2d('pool3', conv3)
     resp3 = reshape(pool3, W['w4'])
     drop3 = dropout(resp3, d)
