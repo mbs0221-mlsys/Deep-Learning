@@ -1,10 +1,16 @@
 <component name="ProjectDictionaryState">
   <dictionary name="本山">
     <words>
+      <w>adadelta</w>
+      <w>alexnet</w>
       <w>conv</w>
+      <w>crossentropy</w>
       <w>maxpool</w>
       <w>mnist</w>
+      <w>oxflower</w>
       <w>relu</w>
+      <w>softmax</w>
+      <w>theano</w>
     </words>
   </dictionary>
 </component>

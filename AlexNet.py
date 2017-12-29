@@ -130,7 +130,6 @@ def AlexNet(x, W, b, d):
     out = output(fc2, W['out'], b['out'])
     return out
 
-
 # 构建模型，定义损失函数和优化器，并构建评估函数
 
 # 构建模型
