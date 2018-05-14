@@ -3,7 +3,7 @@ import tensorflow as tf
 # 输入数据
 from tensorflow.examples.tutorials.mnist import input_data
 
-mnist = input_data.read_data_sets('/tmp/data/', one_hot=True)
+mnist = input_data.read_data_sets('/mnist/', one_hot=True)
 
 # 定义网络的超参数
 learning_rate = 0.001

@@ -1,3 +1,5 @@
+from __future__ import division, print_function, absolute_import
+
 import tflearn
 from tflearn.layers.core import input_data, dropout, fully_connected
 from tflearn.layers.conv import conv_2d, max_pool_2d
@@ -38,9 +40,8 @@ def AlexNet():
     network = regression(network, optimizer='momentum', loss='categorical_crossentropy', learning_rate=0.001)
     return network
 
-
 # 加载数据
-X, Y = oxflower17.load_data(one_hot=True, resize_pics=(227, 227))
+X, Y = oxflower17.load_data(dirname='.\\17flowers', one_hot=True, resize_pics=(227, 227))
 
 # 构建模型
 alexnet = AlexNet()
@@ -48,3 +49,4 @@ modal = tflearn.DNN(alexnet, checkpoint_path='./model/AlexNet/', max_checkpoints
 modal.fit(X, Y, n_epoch=1000, validation_set=0.1, shuffle=True,
           show_metric=True, batch_size=64, snapshot_step=200,
           snapshot_epoch=True, run_id='alexnet_oxflower17')
+

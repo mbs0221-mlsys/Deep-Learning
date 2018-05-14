@@ -11,6 +11,7 @@
       <w>oxflower</w>
       <w>relu</w>
       <w>softmax</w>
+      <w>tanh</w>
       <w>tensorflow</w>
       <w>theano</w>
     </words>
