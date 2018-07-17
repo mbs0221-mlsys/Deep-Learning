@@ -4,15 +4,14 @@ import threading
 import os
 import re
 
-import urllib
-import urllib.request
+import urllib, urllib.request
 from urllib.error import URLError
 
 from bs4 import BeautifulSoup
 
 exitFlag = 0
 
-PATH = 'D:/Matlab/DataMining/datasets/image-net'
+PATH = 'D:/Matlab/S20173081189/Datasets/image-net'
 API = 'http://www.image-net.org/api'
 
 
@@ -20,7 +19,7 @@ def download(path, url):
     with open(path, 'w') as fd:
         conn = urllib.request.urlopen(url)
         data = conn.read()
-        fd.write(data.decode('UTF-8'))
+        fd.write(data)
         fd.close()
 
 
@@ -44,7 +43,7 @@ def ImageNet(api, root, wnid):
     # 创建文件夹
     folder = root + '/Images/%s' % wnid
     if not os.path.exists(folder):
-        os.mkdir(folder)
+        os.makedirs(folder)
     # 获取图片urls和bbox
     download(root + '/%s-urls.txt' % wnid, '%s/text/imagenet.synset.geturls?wnid=%s' % (api, wnid))
     download(root + '/%s-bbox.txt' % wnid, '%s/download/imagenet.bbox.synset?wnid=%s' % (api, wnid))

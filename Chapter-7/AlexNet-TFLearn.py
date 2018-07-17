@@ -1,14 +1,16 @@
 from __future__ import division, print_function, absolute_import
 
+import os
+
 import tflearn
-from tflearn.layers.core import input_data, dropout, fully_connected
-from tflearn.layers.conv import conv_2d, max_pool_2d
-from tflearn.layers.normalization import local_response_normalization
-from tflearn.layers.estimator import regression
 import tflearn.datasets.oxflower17 as oxflower17
+from tflearn.layers.conv import conv_2d, max_pool_2d
+from tflearn.layers.core import input_data, dropout, fully_connected
+from tflearn.layers.estimator import regression
+from tflearn.layers.normalization import local_response_normalization
 
 
-def AlexNet():
+def alex_net():
     # 输入数据
     network = input_data(shape=[None, 227, 227, 3])
     # 第一层卷积
@@ -40,13 +42,31 @@ def AlexNet():
     network = regression(network, optimizer='momentum', loss='categorical_crossentropy', learning_rate=0.001)
     return network
 
-# 加载数据
-X, Y = oxflower17.load_data(dirname='.\\17flowers', one_hot=True, resize_pics=(227, 227))
 
-# 构建模型
-alexnet = AlexNet()
-modal = tflearn.DNN(alexnet, checkpoint_path='./model/AlexNet/', max_checkpoints=1, tensorboard_verbose=2)
-modal.fit(X, Y, n_epoch=1000, validation_set=0.1, shuffle=True,
-          show_metric=True, batch_size=64, snapshot_step=200,
-          snapshot_epoch=True, run_id='alexnet_oxflower17')
+def train(network, X, Y, model_file):
+    modal = tflearn.DNN(alexnet, checkpoint_path='./model/AlexNet/', max_checkpoints=1, tensorboard_verbose=2)
+    if os.path.isfile(model_file):
+        modal.load(model_file)
+    try:
+        modal.fit(X, Y, n_epoch=100, validation_set=0.1, shuffle=True,
+              show_metric=True, batch_size=32, snapshot_step=200,
+              snapshot_epoch=True, run_id=dataset_name)
+    except KeyboardInterrupt as i:
+        print('Closed by an KeyboardInterrupt')
+    finally:
+        modal.save(model_file)
 
+
+
+def predict(newtwork, model_file, images):
+    pass
+
+
+if __name__ == '__main__':
+    # 加载数据
+    dataset_name = 'alexnet_oxflower17'
+    X, Y = oxflower17.load_data(dirname='.\\17flowers', one_hot=True, resize_pics=(227, 227))
+    # 构建模型
+    model_file = './model/' + dataset_name + '.model'
+    alexnet = alex_net()
+    train(network=alex_net, X=X, Y=Y, model_file=model_file)
