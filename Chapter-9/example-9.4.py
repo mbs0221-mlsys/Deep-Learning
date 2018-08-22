@@ -10,7 +10,7 @@ import numpy as np
 # 9.4.2 构建模型
 
 FLAGS = {
-    'data_dir': ''
+    'data_dir': 'mnist'
 }
 
 # 加载数据
@@ -45,7 +45,7 @@ def dropout(x, d):
 
 # 整形
 def reshape(x, W):
-    return tf.reshape(x[-1, W.getshape().as_list()[0]])
+    return tf.reshape(x[-1, W.shape.as_list()[0]])
 
 
 # 全连接层
@@ -59,7 +59,7 @@ def output(x, W, b):
 
 
 weights = {
-    'w1': init_weights([3, 3, 1, 32]),
+    'w1': init_weights([3, 3, 28, 28]),
     'w2': init_weights([3, 3, 32, 64]),
     'w3': init_weights([3, 3, 64, 128]),
     'w4': init_weights([128 * 4 * 4, 625]),
@@ -91,10 +91,12 @@ def model(x, W, d, dh):
 
 
 if __name__ == '__main__':
-    trainX, trainY = mnist.train
-    testX, testY = mnist.test
+    train = mnist.train
+    trainX, trainY = train.images, train.labels
+    test = mnist.test
+    testX, testY = test.images, test.labels
 
-    trainX = trainX.reshape(-1, 28, 28, 1)  # 28*28*1 input imgg
+    trainX = trainX.reshape(-1, 28, 28, 1)  # 28*28*1 input img
     testX = testX.reshape(-1, 28, 28, 1)  # 28*28*1 input img
 
     X = tf.placeholder(tf.float32, [None, 28, 28, 1])

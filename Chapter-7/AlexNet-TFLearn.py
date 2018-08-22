@@ -37,7 +37,7 @@ def AlexNet():
     network = dropout(network, 0.5)
     # 输出层
     network = fully_connected(network, 17, activation='softmax')
-    network = regression(network, optimizer='momentum', loss='categorical_crossentropy', learning_rate=0.001)
+    network = regression(network, optimizer='momentum', loss='categorical_crossentropy', learning_rate=0.1)
     return network
 
 # 加载数据
@@ -46,7 +46,8 @@ X, Y = oxflower17.load_data(dirname='.\\17flowers', one_hot=True, resize_pics=(2
 # 构建模型
 alexnet = AlexNet()
 modal = tflearn.DNN(alexnet, checkpoint_path='./model/AlexNet/', max_checkpoints=1, tensorboard_verbose=2)
-modal.fit(X, Y, n_epoch=1000, validation_set=0.1, shuffle=True,
-          show_metric=True, batch_size=64, snapshot_step=200,
+modal.fit(X, Y, n_epoch=200, validation_set=0.1, shuffle=True,
+          show_metric=True, batch_size=10, snapshot_step=50,
           snapshot_epoch=True, run_id='alexnet_oxflower17')
 
+y = modal.predict(X)

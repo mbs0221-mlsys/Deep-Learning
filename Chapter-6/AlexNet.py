@@ -51,7 +51,7 @@ def norm(name, l_input, l_size=4):
 
 # 全连接操作
 def full(name, x, W, b, dropout):
-    fc = tf.reshape(x[-1, W.getshape().as_list()[0]])
+    fc = tf.reshape(x[-1, 4096])
     fc = tf.add(tf.matmul(fc, W), b)
     fc = tf.nn.relu(fc)
     # dropout
