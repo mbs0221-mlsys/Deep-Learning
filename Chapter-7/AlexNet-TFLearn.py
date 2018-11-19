@@ -43,6 +43,7 @@ def alex_net():
     return network
 
 
+
 def train(network, X, Y, model_file):
     modal = tflearn.DNN(alexnet, checkpoint_path='./model/AlexNet/', max_checkpoints=1, tensorboard_verbose=2)
     if os.path.isfile(model_file):
