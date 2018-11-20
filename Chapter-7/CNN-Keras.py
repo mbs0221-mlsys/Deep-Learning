@@ -2,6 +2,7 @@ from keras.models import Sequential, save_model, load_model, model_from_json, mo
 from keras.layers import Dense, Activation, Convolution2D, MaxPooling2D, Dropout, Flatten
 from keras.utils import np_utils
 from keras.datasets import mnist
+from keras import backend as K
 
 batch_size = 128
 nb_classes = 10  # 分类数
@@ -43,17 +44,16 @@ def CNN(nb_filters, kernel_size, pool_size, input_shape):
     model.compile(loss='categorical_crossentropy', optimizer='adadelta', metrics=['accuracy'])
     return model
 
-
 (X_train, Y_train), (X_test, Y_test) = mnist.load_data()
 if K.image_dim_ordering() == 'th':
     # 使用Theano的顺序
-    X_train = X_train.reshape(X_train.shape()[0], 1, img_rows, img_cols)
-    X_test = X_test.reshape(X_train.shape()[0], 1, img_rows, img_cols)
+    X_train = X_train.reshape(X_train.shape[0], 1, img_rows, img_cols)
+    X_test = X_test.reshape(X_test.shape[0], 1, img_rows, img_cols)
     input_shape = (1, img_rows, img_cols)
 else:
     # 使用Tensorflow的顺序
-    X_train = X_train.reshape(X_train.shape()[0], img_rows, img_cols, 1)
-    X_test = X_test.reshape(X_train.shape()[0], img_rows, img_cols, 1)
+    X_train = X_train.reshape(X_train.shape[0], img_rows, img_cols, 1)
+    X_test = X_test.reshape(X_test.shape[0], img_rows, img_cols, 1)
     input_shape = (img_rows, img_cols, 1)
 
 X_train = X_train.astype('float32')

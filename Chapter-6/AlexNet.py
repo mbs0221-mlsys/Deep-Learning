@@ -1,9 +1,9 @@
 import tensorflow as tf
 
 # 输入数据
-from tensorflow.examples.tutorials.mnist import input_data
+from tensorflow_datasets.image import mnist
 
-mnist = input_data.read_data_sets('/mnist/', one_hot=True)
+# mnist = mnist.read_data_sets('/mnist/', one_hot=True)
 
 # 定义网络的超参数
 learning_rate = 0.001
@@ -51,7 +51,7 @@ def norm(name, l_input, l_size=4):
 
 # 全连接操作
 def full(name, x, W, b, dropout):
-    fc = tf.reshape(x[-1, 4096])
+    fc = tf.reshape(x, [-1, 4096])
     fc = tf.add(tf.matmul(fc, W), b)
     fc = tf.nn.relu(fc)
     # dropout
@@ -147,7 +147,7 @@ def AlexNet(x, W, b, d):
 modal = AlexNet(x, weights, biases, dropout)
 
 # 定义损失函数和优化器
-cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(modal, y))
+cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels=modal, logits=y))
 optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
 
 # 评估函数
@@ -162,7 +162,7 @@ with tf.Session() as sess:
     step = 1
     # 开始训练，直到达到training_iter，即200000
     while step * batch_size < training_iter:
-        batch_x, batch_y = mnist.train.next_batch(batch_size)
+        batch_x, batch_y = mnist[0, batch_size]
         sess.run(optimizer, feed_dict={x: batch_x, y: batch_y, keep_prob: dropout})
         if step % display_step == 0:
             loss, acc = sess.run([cost, accuracy], feed_dict={x: batch_x, y: batch_y, keep_prob: 1.0})
@@ -170,5 +170,5 @@ with tf.Session() as sess:
         step += 1
     print('Optimization Finished!')
     # 计算测试集的准确度
-    acc = sess.run(accuracy, feed_dict={x: mnist.test.images[:256], y: mnist.test.images[:256], keep_prob: 1.0})
+    acc = sess.run(accuracy, feed_dict={x: mnist[1][:256], y: mnist[1][:256], keep_prob: 1.0})
     print('Testing Accuracy:', acc)
