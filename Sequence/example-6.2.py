@@ -99,15 +99,15 @@ model.compile(optimizer='rmsprop',
               metrics=['acc'])
 
 # 加载预训练模型
-if os.path.exists('pretrained-glove-model.h5'):
+if os.path.exists('example-6.2.h5'):
     print('Load pretrained model.')
-    model.load_weights('pretrained-glove-model.h5')
+    model.load_weights('example-6.2.h5')
 
 history = model.fit(xtrain, ytrain,
                     epochs=20,
                     batch_size=32,
                     validation_data=(xtest, ytest))
-model.save_weights('pretrained-glove-model.h5')
+model.save_weights('example-6.2.h5')
 
 # 代码清单6-15 绘制结果
 acc = history.history['acc']
