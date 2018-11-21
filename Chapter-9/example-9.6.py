@@ -93,7 +93,7 @@ optimizer = tf.train.RMSPropOptimizer(learning_rate).minimize(cost)
 
 # 3. 训练数据及评估模型
 
-mnist = input_data.read_data_sets('./DataSet/MNIST/', one_hot=True)
+mnist = input_data.read_data_sets('../datasets/MNIST/', one_hot=True)
 
 # 在一个会话中启动图，开始训练和评估
 with tf.Session() as sess:
@@ -118,5 +118,6 @@ with tf.Session() as sess:
         a[0][i].imshow(np.reshape(mnist.test.images[i], (28, 28)))  # 测试集
         a[1][i].imshow(np.reshape(encode_decode[i], (28, 28)))  # 重建结果
     f.show()
+    plt.savefig('./auto-encoder.jpg')
     plt.draw()
     plt.waitforbuttonpress()

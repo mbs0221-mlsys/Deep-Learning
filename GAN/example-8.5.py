@@ -47,14 +47,14 @@ x = layers.Conv2D(128, 4, strides=2)(x)
 x = layers.LeakyReLU()(x)
 x = layers.Flatten()(x)
 # dropout层
-x = layers.Dropout(0.4)(x)
+x = layers.Dropout(0.5)(x)
 # 分类层
 x = layers.Dense(1, activation='sigmoid')(x)
 
 discriminator = keras.models.Model(discriminator_input, x)
 discriminator.summary()
 
-discriminator_optimizer = keras.optimizers.RMSprop(lr=0.0008, clipvalue=1.0, decay=1e-8)
+discriminator_optimizer = keras.optimizers.RMSprop(lr=0.008, clipvalue=1.0, decay=1e-8)
 discriminator.compile(optimizer=discriminator_optimizer, loss='binary_crossentropy')
 
 """
@@ -64,7 +64,7 @@ discriminator.trainable = False
 gan_input = keras.Input(shape=(latent_dim,))
 gan_output = discriminator(generator(gan_input))
 gan = keras.models.Model(gan_input, gan_output)
-gan_optimizer = keras.optimizers.RMSprop(lr=0.0004, clipvalue=1.0, decay=1e-8)
+gan_optimizer = keras.optimizers.RMSprop(lr=0.004, clipvalue=1.0, decay=1e-8)
 gan.compile(optimizer=gan_optimizer, loss='binary_crossentropy')
 
 """
@@ -83,7 +83,7 @@ if not os.path.exists(save_dir):
 
 if os.path.exists('gan-8.5.h5'):
     print('load pre-trained model')
-    # gan.load_weights('gan-8.5.h5')
+    gan.load_weights('gan-8.5.h5')
 
 start = 0
 for step in range(iterations):
