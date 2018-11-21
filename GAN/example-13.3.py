@@ -68,8 +68,8 @@ if __name__ == '__main__':
     num_classes = 10
 
     # 定义超参数
-    nb_epochs = 50
-    batch_size = 100
+    nb_epochs = 30
+    batch_size = 25
     latent_size = 100
 
     # 优化器的学习率
@@ -112,6 +112,11 @@ if __name__ == '__main__':
     train_images = train_images.astype('float32') / 255
     test_images = test_images.reshape((10000, 28, 28, 1))
     test_images = test_images.astype('float32') / 255
+
+    train_images = train_images[:2000]
+    train_labels = train_labels[:2000]
+    test_images = test_images[:1000]
+    test_labels = test_labels[:1000]
     # train_labels = to_categorical(train_labels)
     # test_labels = to_categorical(test_labels)
 
@@ -154,6 +159,7 @@ if __name__ == '__main__':
             trick = np.ones(2 * batch_size)
             gen_loss = combined.train_on_batch([noise, sampled_labels.reshape((-1, 1))], [trick, sampled_labels])
             epochs_gen_loss.append(gen_loss)
+            print('Batches:{}'.format(gen_loss))
         print('\nTesting for epochs {}'.format(epochs + 1))
 
         # 评估测试集
@@ -177,7 +183,7 @@ if __name__ == '__main__':
 
         trick = np.ones(2 * nb_test)
 
-        generator_test_loss = generator.evaluate(
+        generator_test_loss = combined.evaluate(
             [noise, sampled_labels.reshape((-1, 1))],
             [trick, sampled_labels], verbose=False)
 
@@ -190,7 +196,7 @@ if __name__ == '__main__':
         history_test['generator'].append(generator_test_loss)
         history_test['discriminator'].append(discriminator_test_loss)
 
-        print(HEADER_FMT.format('component', discriminator.metrics_names))
+        print(HEADER_FMT.format('component', *discriminator.metrics_names))
         print('-' * 65)
         print(ROW_FMT.format('generator (train)', *history_train['generator'][-1]))
         print(ROW_FMT.format('generator (test)', *history_test['generator'][-1]))
