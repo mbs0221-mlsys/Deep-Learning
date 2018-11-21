@@ -52,7 +52,7 @@ weights = {
 biases = {
     'encoder_b1': init_biases([n_hidden_1]),
     'encoder_b2': init_biases([n_hidden_2]),
-    'decoder_b1': init_biases(n_hidden_1),
+    'decoder_b1': init_biases([n_hidden_1]),
     'decoder_b2': init_biases([n_input])
 }
 

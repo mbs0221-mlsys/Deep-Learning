@@ -74,9 +74,16 @@ gan.compile(optimizer=gan_optimizer, loss='binary_crossentropy')
 xtrain = xtrain[ytrain.flatten() == 6]
 xtrain = xtrain.reshape((xtrain.shape[0],) + (height, width, channels)).astype('float32') / 255
 
-iterations = 1000
+iterations = 200
 batch_size = 20
 save_dir = 'gan-8.5'
+
+if not os.path.exists(save_dir):
+    os.mkdir(save_dir)
+
+if os.path.exists('gan-8.5.h5'):
+    print('load pre-trained model')
+    # gan.load_weights('gan-8.5.h5')
 
 start = 0
 for step in range(iterations):
@@ -104,7 +111,7 @@ for step in range(iterations):
         start = 0
 
     # 每100步保存并绘图
-    if step % 100 == 0:
+    if step % 20 == 0:
         # 保存模型权重
         gan.save_weights('gan-8.5.h5')
         # 输出指标
@@ -112,7 +119,7 @@ for step in range(iterations):
         print('adversarial loss:', a_loss)
         # 保存一张生成图像
         img = image.array_to_img(generator_image[0] * 255., scale=False)
-        img.save(os.path.join(save_dir, 'generated_frog' + str(step) + '.png'))
+        img.save(os.path.join(save_dir, str(step) + '-generated_frog.png'))
         # 保存一张真实图像
         img = image.array_to_img(real_image[0] * 255., scale=False)
-        img.save(os.path.join(save_dir, 'real_frog' + str(step) + '.png'))
+        img.save(os.path.join(save_dir, str(step) + '-real_frog.png'))

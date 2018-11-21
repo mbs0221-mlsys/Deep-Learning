@@ -43,31 +43,23 @@ def alex_net():
     return network
 
 
-
-def train(network, X, Y, model_file):
-    modal = tflearn.DNN(network, checkpoint_path='./model/AlexNet/', max_checkpoints=1, tensorboard_verbose=2)
+if __name__ == '__main__':
+    # 加载数据
+    dataset = 'alexnet_oxflower17'
+    X, Y = oxflower17.load_data(one_hot=True, resize_pics=(227, 227))
+    # 构建模型
+    alexnet = alex_net()
+    modal = tflearn.DNN(alexnet, checkpoint_path='./model/', max_checkpoints=1, tensorboard_verbose=2)
+    # 检查点
+    model_file = './model/' + dataset + '.model'
     if os.path.isfile(model_file):
         modal.load(model_file)
     try:
         modal.fit(X, Y, n_epoch=100, validation_set=0.1, shuffle=True,
-              show_metric=True, batch_size=32, snapshot_step=200,
-              snapshot_epoch=True, run_id=dataset_name)
+                  show_metric=True, batch_size=32, snapshot_step=200,
+                  snapshot_epoch=True, run_id=dataset)
+        modal.save(model_file)
     except KeyboardInterrupt as i:
         print('Closed by an KeyboardInterrupt')
     finally:
         modal.save(model_file)
-
-
-
-def predict(newtwork, model_file, images):
-    pass
-
-
-if __name__ == '__main__':
-    # 加载数据
-    dataset_name = 'alexnet_oxflower17'
-    X, Y = oxflower17.load_data(dirname='.\\17flowers', one_hot=True, resize_pics=(227, 227))
-    # 构建模型
-    model_file = './model/' + dataset_name + '.model'
-    alexnet = alex_net()
-    train(network=alex_net, X=X, Y=Y, model_file=model_file)
