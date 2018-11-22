@@ -132,6 +132,13 @@ if __name__ == '__main__':
     if not os.path.exists(save_dir):
         os.mkdir(save_dir)
 
+    # 加载检查点
+    if os.path.exists('params_generator.hdf5'):
+        generator.load_weights('params_generator.hdf5', True)
+
+    if os.path.exists('params_discriminator.hdf5'):
+        discriminator.load_weights('params_discriminator.hdf5', True)
+
     for epochs in range(nb_epochs):
         print('Epoch {} of {}'.format(epochs + 1, nb_epochs))
         nb_batches = int(train_images.shape[0] / batch_size)
@@ -208,15 +215,13 @@ if __name__ == '__main__':
         discriminator.save_weights('params_discriminator.hdf5', True)
 
         # 生成一些可视化的数字来看演化过程
-        noise = np.random.uniform(0, 1, (100, latent_size))
-        sampled_labels = np.array([[i] * num_classes] for i in range(num_classes)).reshape((-1, 1))
-        generated_images = generator.predict([noise, sampled_labels], verbose=True)
+        noise = np.random.uniform(0, 1, (30, latent_size))
+        sampled_labels = np.array([[i] * 3 for i in range(num_classes)])
+        generated_images = generator.predict([noise, sampled_labels.reshape((-1, 1))], verbose=0)
 
         # 整理到一个方格中
-        img = (np.concatenate([r.reshape(-1, 28) for r in np.split(generated_images, num_classes)],
-                              axis=-1) * 255).astype(
-            np.uint8)
+        img = (np.concatenate([r.reshape((-1, 28, 1)) for r in np.split(generated_images, num_classes)], axis=1) * 255).astype(np.uint8)
         img = image.array_to_img(img, scale=False)
-        img.save(os.path.join(save_dir, 'generated-.' + str(epochs) + 'png'))
+        img.save(os.path.join(save_dir, 'generated-f' + str(epochs) + '.png'))
 
     pickle.dump({'train': history_train, 'test': history_test}, open('acgan-history.pkl', 'wb'))
