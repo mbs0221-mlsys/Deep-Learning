@@ -68,7 +68,7 @@ if __name__ == '__main__':
     num_classes = 10
 
     # 定义超参数
-    nb_epochs = 30
+    nb_epochs = 10
     batch_size = 25
     latent_size = 100
 
@@ -220,7 +220,8 @@ if __name__ == '__main__':
         generated_images = generator.predict([noise, sampled_labels.reshape((-1, 1))], verbose=0)
 
         # 整理到一个方格中
-        img = (np.concatenate([r.reshape((-1, 28, 1)) for r in np.split(generated_images, num_classes)], axis=1) * 255).astype(np.uint8)
+        img = (np.concatenate([r.reshape((-1, 28, 1)) for r in np.split(generated_images, num_classes)],
+                              axis=1) * 255).astype(np.uint8)
         img = image.array_to_img(img, scale=False)
         img.save(os.path.join(save_dir, 'generated-f' + str(epochs) + '.png'))
 

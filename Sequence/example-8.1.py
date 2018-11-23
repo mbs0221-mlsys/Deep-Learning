@@ -8,6 +8,10 @@ from keras import layers
 from keras.models import Sequential
 from keras.layers import LSTM, Dense
 
+"""
+Python 深度学习
+"""
+
 # 下载并解析初始文本文件
 path = keras.utils.get_file(
     'nietzsche.txt',
@@ -89,4 +93,5 @@ for epochs in range(1, 10):
             generated_text = generated_text[1:]
 
             sys.stdout.write(next_char)
+        sys.stdout.write('\n')
     model.save_weights('example-8.1.h5')

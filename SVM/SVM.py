@@ -55,7 +55,7 @@ loss_vec = []
 train_accuracy = []
 test_accuracy = []
 
-for i in range(200):
+for i in range(1000):
     # 随机选取样本
     rand_index = np.random.choice(len(x_train), size=batch_size)
     rand_x = x_train[rand_index]
