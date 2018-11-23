@@ -55,8 +55,8 @@ if __name__ == '__main__':
     if os.path.isfile(model_file):
         modal.load(model_file)
     try:
-        modal.fit(X, Y, n_epoch=100, validation_set=0.1, shuffle=True,
-                  show_metric=True, batch_size=32, snapshot_step=200,
+        modal.fit(X, Y, n_epoch=10, validation_set=0.2, shuffle=True,
+                  show_metric=True, batch_size=16, snapshot_step=200,
                   snapshot_epoch=True, run_id=dataset)
         modal.save(model_file)
     except KeyboardInterrupt as i:
