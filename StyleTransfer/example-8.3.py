@@ -6,6 +6,10 @@ from scipy.optimize import fmin_l_bfgs_b
 from scipy.misc import imsave
 import time
 
+"""
+[2] Image Style Transfer Using Convolutional Neural Networks. Leon A. Gatys, Alexander S. Ecker, and Matthias Bethge. CVPR 2016. 
+"""
+
 target_image_path = './img/pic1.jpg'
 style_reference_image_path = './img/timg2.jpg'
 
@@ -32,6 +36,13 @@ def deprocess_image(x):
 
 
 def content_loss(base, combination):
+    """
+    内容损失
+
+    :param base:
+    :param combination:
+    :return:
+    """
     return K.sum(K.square(combination - base))
 
 
@@ -41,6 +52,13 @@ def gram_matrix(x):
 
 
 def style_loss(style, combination):
+    """
+    样式损失
+
+    :param style:
+    :param combination:
+    :return:
+    """
     S = gram_matrix(style)
     C = gram_matrix(combination)
     channels = 3
@@ -60,6 +78,16 @@ def transfer_loss(inputs, combination_image,
                   total_variation_weight=1e-4,
                   style_weight=1.,
                   content_weight=0.0025):
+    """
+    总的损失
+
+    :param inputs:
+    :param combination_image:
+    :param total_variation_weight:
+    :param style_weight:
+    :param content_weight:
+    :return:
+    """
     model = vgg19.VGG19(input_tensor=inputs, weights='imagenet', include_top=False)
     print('Model loaded.')
     output_dict = dict([(layer.name, layer.output) for layer in model.layers])
