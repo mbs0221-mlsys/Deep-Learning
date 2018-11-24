@@ -90,7 +90,7 @@ if __name__ == '__main__':
     # 代码清单8-27 训练VAE
     img_shape = (28, 28, 1)
     batch_size = 16
-    latent_dim = 5
+    latent_dim = 2
 
     [encoder, decoder, vae] = vae_auto_encoder(img_shape, latent_dim)
     vae.compile(optimizer='rmsprop', loss=None)
@@ -104,13 +104,15 @@ if __name__ == '__main__':
     x_test = x_test.reshape(x_test.shape + (1,))
 
     model_path = './vae-8.4.hdf5'
+    isTraining = True
     if os.path.exists(model_path):
         vae.load_weights(model_path)
-    vae.fit(x=x_train, y=None,
-            shuffle=True,
-            epochs=10,
-            batch_size=batch_size,
-            validation_data=(x_test, None))
+    if isTraining:
+        vae.fit(x=x_train, y=None,
+                shuffle=True,
+                epochs=2,
+                batch_size=batch_size,
+                validation_data=(x_test, None))
     vae.save_weights(model_path)
 
     # 代码清单8-28 从二维潜在空间中采样一组点的网格，将其解码为图像
@@ -122,8 +124,15 @@ if __name__ == '__main__':
     for i, yi in enumerate(grid_x):
         for j, xj in enumerate(grid_y):
             z_sample = np.array([[xj, yi]])
-            z_sample = np.tile(z_sample, batch_size).reshape(batch_size, 2)
+            z_sample = np.tile(z_sample, batch_size).reshape(batch_size, 1, latent_dim)
             x_decoded = decoder.predict(z_sample, batch_size=batch_size)
             digit = x_decoded[0].reshape(digit_size, digit_size)
             digits.append(digit)
-    digits = np.reshape(digits, (n, n))
+    digits = np.array(digits)
+    digits = np.reshape(digits, (n, n, digit_size, digit_size))
+    digits = np.concatenate(digits, axis=1)
+    digits = np.concatenate(digits, axis=1)
+    plt.figure(figsize=(10, 10))
+    plt.imshow(digits, cmap='Greys_r')
+    plt.savefig('vae-8.4.jpg')
+    plt.show()
