@@ -5,6 +5,7 @@ import numpy as np
 from scipy.optimize import fmin_l_bfgs_b
 from scipy.misc import imsave
 import time
+import os
 
 """
 [2] Image Style Transfer Using Convolutional Neural Networks. Leon A. Gatys, Alexander S. Ecker, and Matthias Bethge. CVPR 2016. 
@@ -152,7 +153,7 @@ if __name__ == '__main__':
 
     evaluator = Evaluator()
 
-    result_prefix = 'my_result'
+    output_dir = './results/'
     iterations = 10
 
     x = preprocess_image(target_image_path, size=(img_height, img_width))
@@ -165,7 +166,7 @@ if __name__ == '__main__':
         print('Current loss value: ', min_val)
         img = x.copy().reshape((img_height, img_width, 3))
         img = deprocess_image(img)
-        fname = result_prefix + '_iter_%d.jpg' % i
+        fname = os.path.join(output_dir, 'my_result_iter_%d.jpg' % i)
         imsave(fname, img)
         print('Image saved as: ', fname)
         end_time = time.time()

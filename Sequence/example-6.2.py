@@ -8,6 +8,11 @@ import matplotlib.pylab as plt
 
 import os
 
+"""
+Python 深度学习
+6.2 理解循环神经网络
+"""
+
 imdb_dir = '../datasets/aclImdb'
 train_dir = os.path.join(imdb_dir, 'train')
 
