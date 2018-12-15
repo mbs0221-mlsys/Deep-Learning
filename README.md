@@ -1,6 +1,12 @@
 # Deep-Learning
 参考【深度学习实战】、【Tensorflow技术解析与实战】
-
+## 卷积神经网络 Convolutional Neural Network
+## 深度自编码器 Deep Auto-Encoder
+Auto-Encoder, Variational Auto-Encoder (VAE)
+## 深度序列模型 Deep Sequential Model
+## 生成式对抗网络 Generative Adversarial Network
+DCGAN, ACGAN
+## 深度风格迁移模型 Deep Style Transfer Model
 # 数据集 Datasets
 
 ## 数据挖掘 Data Mining
