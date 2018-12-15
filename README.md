@@ -9,10 +9,6 @@
 
 [Large-scale Scene Understanding Challenge](http://lsun.cs.princeton.edu/2017/)
 
-[CoPhIR - COntent-based Photo Image Retrieval](http://cophir.isti.cnr.it/index.html)
-
-[Actions as Space-Time Shapes](http://www.wisdom.weizmann.ac.il/~vision/SpaceTimeActions.html)
-
 [Tiny Images Dataset](http://horatio.cs.nyu.edu/mit/tiny/data/index.html)
 
 [THOTH Data Sets & Images](https://lear.inrialpes.fr/data)
@@ -22,10 +18,15 @@
 [VIPS's Dataset & Softeware](http://see.xidian.edu.cn/vipsl/dataset.html)
 
 [Flickr30K & MS COCO](http://nic.droppages.com/)
+### 信息检索
+[CoPhIR - COntent-based Photo Image Retrieval](http://cophir.isti.cnr.it/index.html)
+
 ### 场景理解 Scene Understanding
 [SUN Database: Scene Categorization Benchmark](https://vision.princeton.edu/projects/2010/SUN/)
 
 ### 行为识别 Action Recognition
+[Actions as Space-Time Shapes](http://www.wisdom.weizmann.ac.il/~vision/SpaceTimeActions.html)
+
 [Recognition of human actions](http://www.nada.kth.se/cvap/actions/)
 
 [The ChaLearn gesture dataset (CGD 2011) | SpringerLink](https://link.springer.com/article/10.1007/s00138-014-0596-3)
