@@ -1,21 +1,26 @@
 # Deep-Learning
 参考【深度学习实战】、【Tensorflow技术解析与实战】
+
 # 数据集 Datasets
-## 数据挖掘
-### 多标签学习
+
+## 数据挖掘 Data Mining
+
+### 多标签学习 Multi-Label Datasets
 [Mulan: A Java Library for Multi-Label Learning](http://mulan.sourceforge.net/datasets-mlc.html)
 
 [Image Data for Multi-Instance Multi-Label Learning](http://lamda.nju.edu.cn/data_MIMLimage.ashx?AspxAutoDetectCookieSupport=1)
+
 ### 聚类 Clustering
 [Clustering basic benchmark](http://cs.uef.fi/sipu/datasets/)
 
 [Swiss Roll Dataset](http://people.cs.uchicago.edu/~dinoj/manifold/swissroll.html)
-### 社会计算
+
+### 社会计算 Social Computing
 [Stanford Large Network Dataset Collection](http://snap.stanford.edu/data/index.html)
 
 [The Koblenz Network Collection](http://konect.uni-koblenz.de/)
 
-## 自动驾驶
+## 自动驾驶 Autonomous Driving
 [KITTI Vision Benchmark Suite](http://www.cvlibs.net/datasets/kitti/?spm=5176.11156381.0.0.115420e0pM7HRk)
 
 ## 计算机视觉 Computer Vision
@@ -40,7 +45,8 @@
 [The Behance Artistic Media Dataset](https://bam-dataset.org/)
 
 [Vehicle Image Database](http://www.gti.ssr.upm.es/data/Vehicle_database.html?spm=5176.11156381.0.0.115420e0pM7HRk)
-### 信息检索
+
+### 信息检索 Information Retrieval
 [CoPhIR - COntent-based Photo Image Retrieval](http://cophir.isti.cnr.it/index.html)
 
 ### 场景理解 Scene Understanding
@@ -83,8 +89,9 @@
 
 [Cornell Movie-Dialogs Corpus](http://www.cs.cornell.edu/~cristian/Cornell_Movie-Dialogs_Corpus.html)
 
-### 机器翻译
+### 机器翻译 Machine Translation
 [Tab-delimited Bilingual Sentence Pairs](http://www.manythings.org/anki/)
+
 ## 情感计算 Affective Computing
 [Large Movie Review Dataset](http://ai.stanford.edu/~amaas/data/sentiment/)
 
