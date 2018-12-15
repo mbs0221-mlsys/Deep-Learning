@@ -1,6 +1,7 @@
 # Deep-Learning
 参考【深度学习实战】、【Tensorflow技术解析与实战】
 ## 卷积神经网络 Convolutional Neural Network
+AlexNet
 ## 深度自编码器 Deep Auto-Encoder
 Auto-Encoder, Variational Auto-Encoder (VAE)
 ## 深度序列模型 Deep Sequential Model
