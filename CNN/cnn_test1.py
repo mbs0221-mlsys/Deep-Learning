@@ -39,7 +39,9 @@ model.compile(optimizer='rmsprop',
 if os.path.exists('cnn_test1.hdf5'):
     model.load_weights('cnn_test1.hdf5')
 
-model.fit(train_images, train_labels, epochs=5, batch_size=32)
+isTraining = False
+if isTraining:
+    model.fit(train_images, train_labels, epochs=5, batch_size=32)
 model.save_weights('cnn_test1.hdf5')
 
 test_loss, test_acc = model.evaluate(test_images, test_labels)
@@ -55,13 +57,13 @@ for layer_name, layer_activation in zip([layer.name for layer in model.layers[:5
     size = layer_activation.shape[1]
     n_rows = n_features // n_cols
 
-    A = np.reshape(layer_activation[0], (n_rows, -1, size, size))
-    B = np.concatenate(A, axis=1)
-    C = np.concatenate(B, axis=1)
-    plt.figure(figsize=(C.shape[1]/size, C.shape[0]/size))
+    grid = np.reshape(layer_activation[0], (n_rows, n_cols, size, size))
+    grid = np.concatenate(grid, axis=1)
+    grid = np.concatenate(grid, axis=1)
+
+    plt.figure(figsize=(grid.shape[1] / size, grid.shape[0] / size))
     plt.title(layer_name)
     plt.grid(False)
-    plt.imshow(C, aspect='auto', cmap='viridis')
+    plt.imshow(grid, aspect='auto', cmap='viridis')
     plt.savefig(layer_name + '.jpg')
-
-plt.waitforbuttonpress()
+    plt.show()

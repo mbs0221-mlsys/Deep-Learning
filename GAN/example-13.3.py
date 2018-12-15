@@ -2,20 +2,16 @@
 Tensorflow 技术解析与实战
 """
 
-from keras.models import Sequential, Model
-from keras.layers import Dense, Reshape, UpSampling2D, Conv2D, Convolution2D, Input, Flatten, Embedding, \
-    BatchNormalization
-from keras.layers import LeakyReLU, Dropout, Multiply
-from keras.optimizers import Adam
-from keras.datasets import mnist
-from keras.utils import to_categorical
-from keras.preprocessing import image
-from keras import layers
-from keras.layers import merge
-
 import os
-import numpy as np
 import pickle
+
+import numpy as np
+from keras.datasets import mnist, fashion_mnist
+from keras.layers import Dense, Reshape, UpSampling2D, Conv2D, Input, Flatten, Embedding
+from keras.layers import LeakyReLU, Dropout, Multiply
+from keras.models import Sequential, Model
+from keras.optimizers import Adam
+from keras.preprocessing import image
 
 
 def build_generator(num_classes, latent_size):
@@ -107,7 +103,7 @@ if __name__ == '__main__':
     )
 
     # 读取MNIST数据集
-    (train_images, train_labels), (test_images, test_labels) = mnist.load_data('../datasets/mnist.npz')
+    (train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
     train_images = train_images.reshape((60000, 28, 28, 1))
     train_images = train_images.astype('float32') / 255
     test_images = test_images.reshape((10000, 28, 28, 1))

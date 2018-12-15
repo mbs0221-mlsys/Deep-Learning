@@ -96,7 +96,7 @@ if __name__ == '__main__':
     vae.compile(optimizer='rmsprop', loss=None)
     vae.summary()
 
-    (x_train, _), (x_test, y_test) = mnist.load_data()
+    (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
     x_train = x_train.astype('float32') / 255
     x_train = x_train.reshape(x_train.shape + (1,))
@@ -104,7 +104,7 @@ if __name__ == '__main__':
     x_test = x_test.reshape(x_test.shape + (1,))
 
     model_path = './vae-8.4.hdf5'
-    isTraining = True
+    isTraining = False
     if os.path.exists(model_path):
         vae.load_weights(model_path)
     if isTraining:
@@ -116,7 +116,7 @@ if __name__ == '__main__':
     vae.save_weights(model_path)
 
     # 代码清单8-28 从二维潜在空间中采样一组点的网格，将其解码为图像
-    n = 15
+    n = 19
     digit_size = 28
     digits = []
     grid_x = norm.ppf(np.linspace(0.05, 0.95, n))
@@ -136,3 +136,16 @@ if __name__ == '__main__':
     plt.imshow(digits, cmap='Greys_r')
     plt.savefig('vae-8.4.jpg')
     plt.show()
+
+    # 将图像转换为样本均值和方差
+
+    x = encoder.predict(x_test)
+    x_test1 = decoder.predict(x)
+
+    img = np.concatenate([x_test1, x_test], axis=2)
+    plt.imshow(img[0])
+    plt.savefig('vae-8.4-predict.jpg')
+    plt.show()
+
+    data = [x_test, y_test]
+    np.savetxt('a.txt', data)
