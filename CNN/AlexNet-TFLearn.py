@@ -46,7 +46,7 @@ def alex_net():
 if __name__ == '__main__':
     # 加载数据
     dataset = 'alexnet_oxflower17'
-    X, Y = oxflower17.load_data(one_hot=True, resize_pics=(227, 227))
+    X, Y = oxflower17.load_data(dirname='../datasets/17flowers', one_hot=True, resize_pics=(227, 227))
     # 构建模型
     alexnet = alex_net()
     modal = tflearn.DNN(alexnet, checkpoint_path='./model/', max_checkpoints=1, tensorboard_verbose=2)

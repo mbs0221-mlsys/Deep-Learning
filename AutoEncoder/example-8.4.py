@@ -1,12 +1,14 @@
+import os
+
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.stats import norm
+
 import keras
-from keras.layers import *
-from keras.models import *
 from keras import backend as K
 from keras.datasets import mnist
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.stats import norm
-import os
+from keras.layers import *
+from keras.models import *
 
 
 class VAELayer(Layer):
@@ -110,7 +112,7 @@ if __name__ == '__main__':
     if isTraining:
         vae.fit(x=x_train, y=None,
                 shuffle=True,
-                epochs=2,
+                epochs=10,
                 batch_size=batch_size,
                 validation_data=(x_test, None))
     vae.save_weights(model_path)
@@ -139,13 +141,13 @@ if __name__ == '__main__':
 
     # 将图像转换为样本均值和方差
 
-    x = encoder.predict(x_test)
-    x_test1 = decoder.predict(x)
-
-    img = np.concatenate([x_test1, x_test], axis=2)
-    plt.imshow(img[0])
-    plt.savefig('vae-8.4-predict.jpg')
-    plt.show()
-
-    data = [x_test, y_test]
-    np.savetxt('a.txt', data)
+    # x = encoder.predict(x_test)
+    # x_test1 = decoder.predict(x)
+    #
+    # img = np.concatenate([x_test1, x_test], axis=2)
+    # plt.imshow(img[0])
+    # plt.savefig('vae-8.4-predict.jpg')
+    # plt.show()
+    #
+    # data = [x_test, y_test]
+    # np.savetxt('a.txt', data)
