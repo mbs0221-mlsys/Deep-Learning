@@ -64,7 +64,7 @@ xtest = data[train_samples:train_samples + validation_samples]
 ytest = labels[train_samples:train_samples + validation_samples]
 
 # 代码清单 6-10 解析GloVe词嵌入文件
-glove_dir = '../glove/glove.6B'
+glove_dir = '../../glove/glove.6B'
 
 embeddings_index = {}
 f = open(os.path.join(glove_dir, 'glove.6B.100d.txt'), encoding='UTF-8')
