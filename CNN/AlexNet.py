@@ -1,9 +1,14 @@
 import tensorflow as tf
 
 # 输入数据
-from tensorflow_datasets.image import mnist
+import tensorflow_datasets as tfds
 
-# mnist = mnist.read_data_sets('/mnist/', one_hot=True)
+mnist_data = tfds.load('/mnist/')
+print(info.splits["train"].num_examples)
+print(info.splits["label"].num_classes)
+
+
+mnist_train, mnist_test = mnist_data["train"], mnist_data["test"]
 
 # 定义网络的超参数
 learning_rate = 0.001
