@@ -14,7 +14,7 @@ Python 深度学习
 """
 
 # 数据集 http://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz
-imdb_dir = '../datasets/aclImdb'
+imdb_dir = '../../datasets/aclImdb'
 train_dir = os.path.join(imdb_dir, 'train')
 
 labels = []
