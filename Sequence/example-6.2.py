@@ -13,6 +13,7 @@ Python 深度学习
 6.2 理解循环神经网络
 """
 
+# 数据集 http://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz
 imdb_dir = '../datasets/aclImdb'
 train_dir = os.path.join(imdb_dir, 'train')
 
@@ -63,7 +64,7 @@ xtest = data[train_samples:train_samples + validation_samples]
 ytest = labels[train_samples:train_samples + validation_samples]
 
 # 代码清单 6-10 解析GloVe词嵌入文件
-glove_dir = '../datasets/glove.6B'
+glove_dir = '../glove/glove.6B'
 
 embeddings_index = {}
 f = open(os.path.join(glove_dir, 'glove.6B.100d.txt'), encoding='UTF-8')
